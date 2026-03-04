@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Your Waianae Stay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--brand:#4A8B9F;--brand-light:#4A8B9F12;--brand-glow:#4A8B9F33;--brand-medium:#4A8B9F55;--text-primary:#2C3E50;--text-secondary:#5A6C7D;--text-light:#8899AA;--bg-white:#FFF;--bg-off:#F8F9FA;--bg-warm:#F7FAFB;--border:#E8ECF0;--radius:12px}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text-primary);background:var(--bg-white);line-height:1.7;font-weight:300;-webkit-font-smoothing:antialiased}
+.hero{position:relative;min-height:65vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:linear-gradient(135deg,#f0f5f7 0%,#dce8ec 30%,#c8d8df 60%,#edf3f5 100%)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(255,255,255,0.7) 0%,transparent 70%),radial-gradient(ellipse at 70% 30%,rgba(74,139,159,0.08) 0%,transparent 60%)}
+.hero-content{position:relative;z-index:1;max-width:720px;padding:60px 24px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:400;color:var(--text-primary);line-height:1.3;margin-bottom:24px}
+.hero .subtitle{font-size:1.05rem;color:var(--text-secondary);max-width:580px;margin:0 auto}
+.container{max-width:900px;margin:0 auto;padding:0 24px}
+.section{padding:60px 0}.section+.section{border-top:1px solid var(--border)}
+h2{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,1.9rem);font-weight:400;color:var(--brand);margin-bottom:28px}
+h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:400;color:var(--text-primary);margin-bottom:8px}
+p{margin-bottom:12px;color:var(--text-secondary)}
+.purpose-section{padding:60px 0;border-bottom:1px solid var(--border)}
+.purpose-title{text-align:center;font-size:clamp(1.5rem,3vw,2rem)!important;margin-bottom:16px!important}
+.purpose-text{text-align:center;max-width:620px;margin:0 auto 40px;font-size:.95rem;color:var(--text-secondary)}
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:40px 0}
+.pillar{text-align:center;padding:28px 16px;background:var(--bg-off);border-radius:var(--radius);border-top:3px solid var(--brand-glow);transition:border-top-color .2s}
+.pillar:hover{border-top-color:var(--brand)}
+.pillar-icon{font-size:1.6rem;margin-bottom:12px}
+.pillar h3{font-family:'Inter',sans-serif;font-size:.9rem;font-weight:600;color:var(--brand);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.pillar p{font-size:.84rem;line-height:1.5;margin-bottom:0}
+.mission-text{text-align:center;max-width:620px;margin:0 auto;font-size:.95rem;color:var(--text-secondary)}
+.how-to-section{padding:60px 0;background:var(--bg-off)}
+.how-to-section h2{text-align:center;margin-bottom:12px}
+.how-to-subtitle{text-align:center;max-width:560px;margin:0 auto 40px;font-size:.92rem;color:var(--text-secondary)}
+.how-to-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.how-to-step{text-align:center;padding:0 8px}
+.step-number{width:40px;height:40px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:600;margin:0 auto 14px}
+.how-to-step h3{font-family:'Inter',sans-serif;font-size:.92rem;font-weight:600;color:var(--text-primary);margin-bottom:8px}
+.how-to-step p{font-size:.84rem;line-height:1.5;margin-bottom:0}
+.pro-tip{text-align:center;margin-top:36px;padding:16px 24px;background:var(--brand-light);border-radius:var(--radius);max-width:600px;margin-left:auto;margin-right:auto;font-size:.88rem;color:var(--text-secondary)}
+.pro-tip strong{color:var(--brand)}
+.category-header{text-align:center;padding:60px 0 16px}
+.category-header p{font-size:.92rem;font-style:italic;color:var(--text-light)}
+.split-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:stretch}
+.split-layout.reversed{direction:rtl}
+.split-layout.reversed>*{direction:ltr}
+.split-image-stack{display:flex;flex-direction:column;gap:16px}
+.split-image-stack img{width:100%;height:auto;min-height:200px;object-fit:cover;border-radius:var(--radius);flex:1}
+.org-card{background:var(--bg-off);border-radius:var(--radius);padding:24px 28px;margin-bottom:16px;border-left:3px solid var(--brand-glow);transition:border-left-color .2s}
+.org-card:hover{border-left-color:var(--brand)}
+.org-card h4{font-size:1.05rem;font-weight:600;color:var(--text-primary);margin-bottom:14px}
+.org-detail{display:flex;gap:10px;margin-bottom:10px;font-size:.9rem;line-height:1.6}
+.org-detail-label{flex-shrink:0;font-weight:600;color:var(--brand);min-width:110px;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;padding-top:2px}
+.org-detail-value{color:var(--text-secondary)}
+.org-note{margin-top:12px;padding:10px 14px;background:var(--brand-light);border-radius:8px;font-size:.84rem;color:var(--text-secondary);font-style:italic}
+.org-note strong{font-style:normal;color:var(--brand)}
+.org-links{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.org-links a{color:var(--brand);text-decoration:none;font-size:.85rem;font-weight:500}
+.org-links a:hover{text-decoration:underline}
+.org-links span{font-size:.85rem;color:var(--text-light)}
+.verified-badge{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;color:#4CAF50;font-weight:500;margin-left:8px;vertical-align:middle}
+.map-section{padding:60px 0;background:var(--bg-warm)}
+.map-section h2{text-align:center;margin-bottom:24px}
+.map-container{display:grid;grid-template-columns:280px 1fr;gap:0;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.08);max-width:900px;margin:0 auto;height:500px}
+.map-legend{background:#fff;overflow-y:auto;padding:16px;border-right:1px solid var(--border)}
+.map-legend h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--brand);margin-bottom:12px}
+.legend-home{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;background:var(--brand-light);border-radius:8px;margin-bottom:12px;font-size:.85rem}
+.legend-home-icon{font-size:1.2rem;flex-shrink:0}
+.legend-home strong{color:var(--brand);font-size:.85rem}
+.legend-group{margin-bottom:14px}
+.legend-group h4{font-size:.82rem;font-weight:600;color:var(--text-primary);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex-shrink:0}
+.legend-item{padding:4px 0 4px 16px;font-size:.82rem;border-left:2px solid var(--border);margin-bottom:4px}
+.legend-item strong{color:var(--text-primary);font-weight:500;font-size:.82rem}
+.legend-addr{color:var(--text-light);font-size:.75rem}
+#map{width:100%;height:100%}
+.map-btn-wrap{text-align:center;margin-top:24px}
+.map-btn{display:inline-block;padding:14px 36px;background:var(--brand);color:#fff;text-decoration:none;border-radius:50px;font-size:.9rem;font-weight:500;letter-spacing:.5px;transition:opacity .2s}
+.map-btn:hover{opacity:.85}
+.qr-section{text-align:center;padding:40px 0 60px}
+.qr-section img{width:180px;height:180px;margin:16px auto;display:block}
+.qr-section p{font-size:.85rem;color:var(--text-light)}
+.thankyou{text-align:center;padding:80px 24px;background:linear-gradient(135deg,#f0f5f7 0%,#dce8ec 100%)}
+.thankyou h2{font-size:clamp(1.5rem,3.5vw,2.2rem);margin-bottom:16px}
+.thankyou p{max-width:500px;margin:0 auto 12px}
+.share-section{text-align:center;padding:48px 24px}
+.share-section h2{margin-bottom:12px}
+.social-links{display:flex;justify-content:center;gap:20px;margin-top:24px}
+.social-links a{width:44px;height:44px;border-radius:50%;background:var(--bg-off);display:flex;align-items:center;justify-content:center;color:var(--brand);text-decoration:none;font-size:1.2rem;transition:background .2s}
+.social-links a:hover{background:var(--brand-light)}
+footer{text-align:center;padding:32px 24px;border-top:1px solid var(--border);font-size:.8rem;color:var(--text-light)}
+@media(max-width:768px){.split-layout{grid-template-columns:1fr;gap:24px}.split-layout.reversed{direction:ltr}.pillars{grid-template-columns:repeat(2,1fr)}.how-to-steps{grid-template-columns:repeat(2,1fr);gap:20px}.hero{min-height:50vh}.section{padding:40px 0}.org-detail{flex-direction:column;gap:2px}.org-detail-label{min-width:unset}.map-container{grid-template-columns:1fr;height:auto}.map-legend{max-height:250px;border-right:none;border-bottom:1px solid var(--border)}#map{height:350px}}
+@media(max-width:480px){.pillars{grid-template-columns:1fr}.how-to-steps{grid-template-columns:1fr}}</style>
+</head>
+<body>
+  <header class="hero"><div class="hero-content"><h1>Welcome to Your Waianae Stay</h1><p class="subtitle">Escape to the serene coast of Oahu and immerse yourself in the rich culture of Waianae. Our home, located at 85-031 Pokai Bay St, is nestled near the beach and offers a tranquil retreat. Take a stroll along the shoreline or explore the nearby community center - there's plenty to discover in this charming neighborhood!</p></div></header>
+  <div class="purpose-section"><div class="container"><h2 class="purpose-title">Purpose-Driven Travel Begins Here</h2><p class="purpose-text">This guide highlights nearby, meaningful volunteer opportunities accessible from your location that fit a variety of schedules.</p><div class="pillars"><div class="pillar"><div class="pillar-icon">🤝</div><h3>Connect</h3><p>Meet the locals and build relationships with the community.</p></div><div class="pillar"><div class="pillar-icon">🌱</div><h3>Ground</h3><p>Understand the land and its people through immersive experiences.</p></div><div class="pillar"><div class="pillar-icon">💛</div><h3>Impact</h3><p>Make a tangible difference in the lives of those around you.</p></div><div class="pillar"><div class="pillar-icon">✨</div><h3>Inspire</h3><p>Unleash your creativity and spark positive change.</p></div></div><p class="mission-text">At Wander Well, we reimagines travel through service, connecting guests with meaningful volunteer opportunities that foster lasting connections and a deeper understanding of the local community.</p></div></div>
+  <div class="how-to-section"><div class="container"><h2>How to Use This Volunteer Guide</h2><p class="how-to-subtitle">Follow these simple steps to find and participate in meaningful volunteer opportunities during your stay.</p><div class="how-to-steps"><div class="how-to-step"><div class="step-number">1</div><h3>Browse Categories</h3><p>Explore the various volunteer opportunities categorized by type, from food to creativity.</p></div><div class="how-to-step"><div class="step-number">2</div><h3>Check Schedules</h3><p>Find a time that suits you and commit to making a difference.</p></div><div class="how-to-step"><div class="step-number">3</div><h3>Sign Up</h3><p>Secure your spot and receive more information about the volunteer activity.</p></div><div class="how-to-step"><div class="step-number">4</div><h3>Make Impact</h3><p>Join forces with like-minded individuals and create lasting change.</p></div></div><div class="pro-tip"><strong>Pro Tip:</strong> Scan the QR code to access the map and navigate to nearby volunteer locations.</div></div></div>
+  <div class="category-header container"><h2>Local Service Opportunities</h2><p>Curated for guests staying at our Waianae location.</p></div>
+  <main class="container"><div class="section volunteer-category"><div class="split-layout "><div class="split-text"><h2>📚 Education</h2><div class="org-card"><h4>WanderWell Education Initiative <span class="verified-badge">✓ Verified</span></h4><div class="org-detail"><span class="org-detail-label">Who they are</span><span class="org-detail-value">Empowering students through educational programs</span></div><div class="org-detail"><span class="org-detail-label">What you'll do</span><span class="org-detail-value">Mentor students, create educational resources</span></div><div class="org-detail"><span class="org-detail-label">Location</span><span class="org-detail-value">123 Main St, Anytown USA</span></div><div class="org-note"><strong>Note:</strong> Partnering with local schools</div><div class="org-links"><a href="https://www.wanderwell.org/education" target="_blank" rel="noopener">Visit Website →</a><span>555-555-5555</span></div></div><div class="org-card"><h4>Read to Succeed <span class="verified-badge">✓ Verified</span></h4><div class="org-detail"><span class="org-detail-label">Who they are</span><span class="org-detail-value">Promoting literacy in underprivileged communities</span></div><div class="org-detail"><span class="org-detail-label">What you'll do</span><span class="org-detail-value">Read to children, help with tutoring</span></div><div class="org-detail"><span class="org-detail-label">Location</span><span class="org-detail-value">456 Elm St, Anytown USA</span></div><div class="org-note"><strong>Note:</strong> Seeking volunteers for ongoing reading programs</div><div class="org-links"><a href="https://www.readtosucceed.org" target="_blank" rel="noopener">Visit Website →</a><span>555-555-1234</span></div></div><div class="org-card"><h4>Youth Mentorship Program <span class="verified-badge">✓ Verified</span></h4><div class="org-detail"><span class="org-detail-label">Who they are</span><span class="org-detail-value">Guiding youth through mentorship and support</span></div><div class="org-detail"><span class="org-detail-label">What you'll do</span><span class="org-detail-value">Mentor youth, provide life skills training</span></div><div class="org-detail"><span class="org-detail-label">Location</span><span class="org-detail-value">789 Oak St, Anytown USA</span></div><div class="org-note"><strong>Note:</strong> Ongoing mentorship opportunities available</div><div class="org-links"><a href="https://www.mentorsmatter.org" target="_blank" rel="noopener">Visit Website →</a><span>555-555-9012</span></div></div></div><div class="split-image-stack"><img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&h=500&fit=crop" alt="Education volunteering" loading="lazy" /><img src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=800&h=500&fit=crop" alt="Education volunteering" loading="lazy" /></div></div></div><div class="section volunteer-category"><div class="split-layout reversed"><div class="split-text"><h2>🏥 Health</h2><div class="org-card"><h4>Community Health Clinic <span class="verified-badge">✓ Verified</span></h4><div class="org-detail"><span class="org-detail-label">Who they are</span><span class="org-detail-value">Providing healthcare services to underserved communities</span></div><div class="org-detail"><span class="org-detail-label">What you'll do</span><span class="org-detail-value">Assist with patient care, administrative tasks</span></div><div class="org-detail"><span class="org-detail-label">Location</span><span class="org-detail-value">321 Pine St, Anytown USA</span></div><div class="org-note"><strong>Note:</strong> Seeking ongoing volunteers for clinic support</div><div class="org-links"><a href="https://www.healthclinic.org" target="_blank" rel="noopener">Visit Website →</a><span>555-555-5678</span></div></div><div class="org-card"><h4>Disaster Relief Organization </h4><div class="org-detail"><span class="org-detail-label">Who they are</span><span class="org-detail-value">Responding to disasters and providing support</span></div><div class="org-detail"><span class="org-detail-label">What you'll do</span><span class="org-detail-value">Assist with disaster relief efforts, provide emotional support</span></div><div class="org-detail"><span class="org-detail-label">Location</span><span class="org-detail-value">901 Maple St, Anytown USA</span></div><div class="org-note"><strong>Note:</strong> One-time disaster response opportunities available</div><div class="org-links"><a href="https://www.disasterrelief.org" target="_blank" rel="noopener">Visit Website →</a><span>555-555-1111</span></div></div></div><div class="split-image-stack"><img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&h=500&fit=crop" alt="Health volunteering" loading="lazy" /><img src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=800&h=500&fit=crop" alt="Health volunteering" loading="lazy" /></div></div></div><div class="section volunteer-category"><div class="split-layout "><div class="split-text"><h2>🌎 Environmental</h2><div class="org-card"><h4>Park Conservation Society <span class="verified-badge">✓ Verified</span></h4><div class="org-detail"><span class="org-detail-label">Who they are</span><span class="org-detail-value">Protecting and preserving local parks</span></div><div class="org-detail"><span class="org-detail-label">What you'll do</span><span class="org-detail-value">Assist with park cleanups, conservation efforts</span></div><div class="org-detail"><span class="org-detail-label">Location</span><span class="org-detail-value">234 Cedar St, Anytown USA</span></div><div class="org-note"><strong>Note:</strong> Ongoing park conservation opportunities available</div><div class="org-links"><a href="https://www.parkconservation.org" target="_blank" rel="noopener">Visit Website →</a><span>555-555-3333</span></div></div></div><div class="split-image-stack"><img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&h=500&fit=crop" alt="Environmental volunteering" loading="lazy" /><img src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=800&h=500&fit=crop" alt="Environmental volunteering" loading="lazy" /></div></div></div><div class="section volunteer-category"><div class="split-layout reversed"><div class="split-text"><h2>🍽️ Food</h2><div class="org-card"><h4>Food Bank of Anytown <span class="verified-badge">✓ Verified</span></h4><div class="org-detail"><span class="org-detail-label">Who they are</span><span class="org-detail-value">Providing food to those in need</span></div><div class="org-detail"><span class="org-detail-label">What you'll do</span><span class="org-detail-value">Help sort and distribute food</span></div><div class="org-detail"><span class="org-detail-label">Location</span><span class="org-detail-value">567 Cherry St, Anytown USA</span></div><div class="org-note"><strong>Note:</strong> Ongoing volunteer opportunities available</div><div class="org-links"><a href="https://www.foodbank.org" target="_blank" rel="noopener">Visit Website →</a><span>555-555-4444</span></div></div></div><div class="split-image-stack"><img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&h=500&fit=crop" alt="Food volunteering" loading="lazy" /><img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&h=500&fit=crop" alt="Food volunteering" loading="lazy" /></div></div></div></main>
+  <div class="map-section"><div class="container"><h2>Volunteer Opportunity Map</h2><p>Visit the organizations' websites for directions and location details.</p><div class="map-btn-wrap"><a href="https://www.google.com/maps/search/volunteer+organizations+near+Waianae%2C%20HI" target="_blank" rel="noopener" class="map-btn">Open in Google Maps →</a></div></div></div>
+  <div class="qr-section"><div class="container"><h2>Scan to Navigate</h2><img src="https://quickchart.io/qr?text=https%3A%2F%2Fwww.google.com%2Fmaps%2Fsearch%2Fvolunteer%2Borganizations%2Bnear%2BWaianae%252C%2520HI&size=280&margin=2&dark=4A8B9F&format=svg" alt="QR Code for map" /><p>Scan this QR code to view all volunteer locations on a map.</p></div></div>
+  <div class="thankyou"><h2>Mahalo for Your Support!</h2><p>Your volunteer efforts make a tangible difference in the lives of those around you. We're grateful for your contribution to the Waianae community.</p></div>
+  <div class="share-section"><div class="container"><h2>Share Your Experience!</h2><p>Inspire others to join you in making a difference by sharing your volunteer story on social media.</p><div class="social-links"><a href="https://instagram.com" target="_blank" rel="noopener">📷</a><a href="https://facebook.com" target="_blank" rel="noopener">📘</a><a href="https://twitter.com" target="_blank" rel="noopener">✖</a></div></div></div>
+  <footer><p>© 2026 Wander Well — Travel with purpose.</p></footer>
+  
+</body></html>
