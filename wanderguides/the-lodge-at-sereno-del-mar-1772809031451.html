@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volunteer Guide - The Lodge at Sereno Del Mar | WanderWell</title>
+  <meta name="description" content="Volunteer opportunities guide for guests at The Lodge at Sereno Del Mar">
+  <meta property="og:title" content="Volunteer Guide - The Lodge at Sereno Del Mar">
+  <meta property="og:description" content="Welcome to The Lodge at Sereno Del Mar, a serene coastal retreat in Bodega Bay. Just steps from Portuguese Beach, this charming home sits on half an acre and of">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #f8f9fa; line-height: 1.6; }
+    
+    .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 80px 20px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.02em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-width: 800px; margin-left: auto; margin-right: auto; text-wrap: balance; }
+    .hero p { font-size: 1.125rem; opacity: 0.9; max-width: 600px; margin: 0 auto; line-height: 1.8; }
+    .hero .wanderwell-badge { display: inline-block; background: rgba(255,255,255,0.15); padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; margin-bottom: 24px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+    .section { padding: 60px 20px; }
+    .section-alt { background: white; }
+    .section h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 600; margin-bottom: 16px; color: #1a1a2e; text-align: center; }
+    .section .subtitle { text-align: center; color: #64748b; font-size: 1.05rem; margin-bottom: 40px; }
+
+    .purpose-section { background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-top: 3px solid #16a34a; }
+    .purpose-section h2 { color: #15803d; }
+
+    .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 32px; }
+    .value-card { text-align: center; padding: 24px; background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .value-icon { font-size: 2rem; margin-bottom: 12px; }
+    .value-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; color: #1a1a2e; }
+    .value-card p { font-size: 0.9rem; color: #64748b; }
+
+    .mission-box { background: white; border-radius: 12px; padding: 32px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08); max-width: 700px; margin: 0 auto; }
+    .mission-box p { color: #475569; font-size: 1.05rem; line-height: 1.8; font-style: italic; }
+
+    .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; }
+    .step-card { text-align: center; padding: 24px 16px; }
+    .step-number { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: #1a1a2e; color: white; border-radius: 50%; font-weight: 600; font-size: 1.1rem; margin-bottom: 12px; }
+    .step-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
+    .step-card p { font-size: 0.875rem; color: #64748b; }
+
+    .pro-tip { background: #fffbeb; border: 1px solid #fbbf24; border-radius: 12px; padding: 20px; margin-top: 32px; text-align: center; }
+    .pro-tip strong { color: #92400e; }
+    .pro-tip p { color: #78350f; font-size: 0.95rem; }
+
+    .category-section { margin-bottom: 40px; }
+    .category-header { padding: 12px 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
+    .category-header h3 { font-size: 1.25rem; font-weight: 600; color: #1a1a2e; }
+    .org-count { font-size: 0.85rem; color: #64748b; background: #f1f5f9; padding: 4px 12px; border-radius: 12px; }
+
+    .org-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 16px; transition: box-shadow 0.2s; display: flex; overflow: hidden; }
+    .org-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .org-card-image { width: 200px; min-height: 200px; background-size: cover; background-position: center; flex-shrink: 0; }
+    .org-card-content { flex: 1; padding: 24px; min-width: 0; }
+    .org-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+    .org-card-header h4 { font-size: 1.15rem; font-weight: 600; color: #1a1a2e; }
+    .verified-badge { display: inline-flex; align-items: center; gap: 4px; background: #f0fdf4; color: #16a34a; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 500; }
+    .verified-badge::before { content: '\2713'; font-weight: 700; }
+    .org-detail { margin-bottom: 12px; }
+    .org-detail strong { display: block; font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .org-detail p { color: #334155; font-size: 0.95rem; }
+    .distance { color: #16a34a !important; font-size: 0.85rem !important; font-weight: 500; }
+    .visit-link { display: inline-block; background: #1a1a2e; color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: background 0.2s; }
+    .visit-link:hover { background: #16213e; }
+
+    .map-container { display: flex; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 24px; height: 550px; }
+    .map-legend { width: 280px; background: white; overflow-y: auto; border-right: 1px solid #e2e8f0; flex-shrink: 0; }
+    .map-legend-title { padding: 16px; font-weight: 600; font-size: 0.95rem; border-bottom: 1px solid #e2e8f0; background: #f8fafc; }
+    .legend-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px 16px; cursor: pointer; border-bottom: 1px solid #f1f5f9; transition: background 0.15s; }
+    .legend-item:hover, .legend-item.active { background: #f0fdf4; }
+    .legend-item.active { border-left: 3px solid #16a34a; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+    .legend-text { min-width: 0; }
+    .legend-name { display: block; font-size: 0.85rem; font-weight: 600; color: #1a1a2e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .legend-addr { display: block; font-size: 0.75rem; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .legend-home { display: flex; align-items: center; gap: 10px; padding: 12px 16px; cursor: pointer; border-bottom: 2px solid #e2e8f0; background: #fefce8; }
+    .legend-home:hover { background: #fef9c3; }
+    .legend-home-icon { width: 24px; height: 24px; background: #1a1a2e; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .legend-home-icon svg { width: 12px; height: 12px; }
+    #map { flex: 1; min-height: 0; }
+
+    .thank-you { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; text-align: center; padding: 60px 20px; }
+    .thank-you h2 { color: white; }
+    .thank-you p { color: rgba(255,255,255,0.85); max-width: 600px; margin: 0 auto; font-size: 1.05rem; }
+
+    footer { background: #0f172a; color: rgba(255,255,255,0.6); text-align: center; padding: 24px; font-size: 0.85rem; }
+
+    @media print {
+      .hero { padding: 40px 20px; }
+      .hero h1 { font-size: 2rem; }
+      .map-container { height: 400px; }
+      .map-legend { width: 200px; }
+      .org-card { break-inside: avoid; }
+      .org-card-image { width: 160px; min-height: 160px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .section { padding: 30px 20px; }
+    }
+    @media (max-width: 768px) {
+      .map-container { flex-direction: column; height: auto; }
+      .map-legend { width: 100%; max-height: 200px; border-right: none; border-bottom: 1px solid #e2e8f0; }
+      #map { height: 400px; }
+    }
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 2rem; }
+      .hero { padding: 48px 16px; }
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+      .org-card { flex-direction: column; }
+      .org-card-image { width: 100%; min-height: 160px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-content">
+      <span class="wanderwell-badge">WanderWell Guide</span>
+      <h1>Welcome to The Lodge at Sereno Del Mar</h1>
+      <p>Welcome to The Lodge at Sereno Del Mar, a serene coastal retreat in Bodega Bay. Just steps from Portuguese Beach, this charming home sits on half an acre and offers breathtaking views of a sprawling 600-acre ranch with the Pacific Ocean as its stunning backdrop. Whether you’re relaxing on the back patio or strolling along the nearby shore, your stay promises tranquility and natural beauty at every turn.</p>
+    </div>
+  </div>
+
+  <div class="section purpose-section">
+    <div class="container">
+      <h2>Purpose-Driven Travel Begins Here</h2>
+      <p class="subtitle">As a guest at The Lodge at Sereno Del Mar, we invite you to give back to the local community by volunteering with one of the many organizations in the area. This guide will help you discover opportunities to make a positive impact during your stay.</p>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Connect</h3>
+          <p>Meet like-minded individuals and build relationships with the local community.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg></div>
+          <h3>Ground</h3>
+          <p>Get involved in environmental conservation efforts and help protect the natural beauty of the area.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+          <h3>Impact</h3>
+          <p>Make a meaningful difference in the lives of others by volunteering with organizations that support the local community.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg></div>
+          <h3>Inspire</h3>
+          <p>Be inspired by the dedication and passion of local organizations working to create positive change.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section-alt">
+    <div class="container">
+      <div class="mission-box">
+        <p>At WanderWell, we believe that travel and giving back go hand-in-hand. Our mission is to provide opportunities for guests to engage with local communities and make a positive impact on the places they visit.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <h2>How to Use This Volunteer Guide</h2>
+      <p class="subtitle">Follow these simple steps to find and participate in meaningful volunteer opportunities during your stay.</p>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Browse Categories</h3>
+          <p>Explore volunteer opportunities ranging from environmental conservation to community support.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Check Schedules</h3>
+          <p>Look for volunteer opportunities that fit your travel schedule.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Sign Up</h3>
+          <p>Register with the organizations that resonate with you.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h3>Make Impact</h3>
+          <p>Participate and make a meaningful difference.</p>
+        </div>
+      </div>
+      <div class="pro-tip">
+        <p><strong>Pro Tip:</strong> Use the interactive map below to find volunteer opportunities near your location and plan your itinerary accordingly.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section-alt">
+    <div class="container">
+      <h2>Local Service Opportunities</h2>
+      <p class="subtitle">Curated for guests staying at The Lodge at Sereno Del Mar</p>
+      
+    <div class="category-section">
+      <div class="category-header" style="border-left: 4px solid #16a34a">
+        <h3>Environment</h3>
+        <span class="org-count">4 organizations</span>
+      </div>
+      
+        <div class="org-card">
+          <div class="org-card-image" style="background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=280&h=220&fit=crop&auto=format&q=80')"></div>
+          <div class="org-card-content">
+            <div class="org-card-header">
+              <h4>LandPaths</h4>
+              <span class="verified-badge">Verified</span>
+            </div>
+            <div class="org-detail">
+              <strong>Who they are</strong>
+              <p>LandPaths connects people with nature through environmental education, stewardship, and community programs in Sonoma County.</p>
+            </div>
+            <div class="org-detail">
+              <strong>What you'll do</strong>
+              <p>Support youth programs staff by helping bring science curriculum to life and creating connections to nature and community on field trips to open space preserves across Sonoma County.</p>
+            </div>
+            <div class="org-detail">
+              <strong>Location</strong>
+              <p>17599 Fitzpatrick Ln, Occidental, CA 95465, USA</p>
+              
+            </div>
+            <a href="https://www.landpaths.org/participate/" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+          </div>
+        </div>
+      
+        <div class="org-card">
+          <div class="org-card-image" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=280&h=220&fit=crop&auto=format&q=80')"></div>
+          <div class="org-card-content">
+            <div class="org-card-header">
+              <h4>Stewards of the Coast and Redwoods</h4>
+              <span class="verified-badge">Verified</span>
+            </div>
+            <div class="org-detail">
+              <strong>Who they are</strong>
+              <p>Stewards of the Coast and Redwoods protects the natural and cultural resources of Armstrong Redwoods State Natural Reserve, Austin Creek State Recreation Area, and Sonoma Coast State Park through volunteerism, environmental education, and stewardship.</p>
+            </div>
+            <div class="org-detail">
+              <strong>What you'll do</strong>
+              <p>Help promote, restore, and protect natural and cultural resources.</p>
+            </div>
+            <div class="org-detail">
+              <strong>Location</strong>
+              <p>17000 Armstrong Woods Rd, Guerneville, CA 95446, USA</p>
+              
+            </div>
+            <a href="https://www.stewardscr.org/#" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+          </div>
+        </div>
+      
+        <div class="org-card">
+          <div class="org-card-image" style="background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=280&h=220&fit=crop&auto=format&q=80')"></div>
+          <div class="org-card-content">
+            <div class="org-card-header">
+              <h4>Sonoma County Regional Parks</h4>
+              <span class="verified-badge">Verified</span>
+            </div>
+            <div class="org-detail">
+              <strong>Who they are</strong>
+              <p>Sonoma County Regional Parks manages parks, trails, and natural resources, offering recreational, social, and cultural opportunities while preserving the region&#39;s natural and historical resources.</p>
+            </div>
+            <div class="org-detail">
+              <strong>What you'll do</strong>
+              <p>Volunteers build trails, maintain campgrounds, staff special events, mend fences, lead hikes, clear brush, and assist with various projects like stewarding natural resources, maintaining trails, and improving facilities.</p>
+            </div>
+            <div class="org-detail">
+              <strong>Location</strong>
+              <p>400 Aviation Blvd #100, Santa Rosa, CA 95403, USA</p>
+              
+            </div>
+            <a href="https://parks.sonomacounty.ca.gov/learn/volunteer" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+          </div>
+        </div>
+      
+        <div class="org-card">
+          <div class="org-card-image" style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=280&h=220&fit=crop&auto=format&q=80')"></div>
+          <div class="org-card-content">
+            <div class="org-card-header">
+              <h4>Point Reyes National Seashore Association</h4>
+              <span class="verified-badge">Verified</span>
+            </div>
+            <div class="org-detail">
+              <strong>Who they are</strong>
+              <p>Point Reyes National Seashore Association works in partnership with the National Park Service to preserve wildlife habitats, trails, and historic sites at Point Reyes National Seashore.</p>
+            </div>
+            <div class="org-detail">
+              <strong>What you'll do</strong>
+              <p>Volunteers help with park stewardship, restoring habitat, monitoring species, educating visitors, removing ice plant, restoring coastal dune habitat, and assisting at visitor centers.</p>
+            </div>
+            <div class="org-detail">
+              <strong>Location</strong>
+              <p>1 Bear Valley Rd bldg 70, Point Reyes Station, CA 94956, USA</p>
+              
+            </div>
+            <a href="https://ptreyes.org/about/jobs/#volunteer" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+          </div>
+        </div>
+      
+    </div>
+  
+    <div class="category-section">
+      <div class="category-header" style="border-left: 4px solid #2563eb">
+        <h3>Community</h3>
+        <span class="org-count">4 organizations</span>
+      </div>
+      
+        <div class="org-card">
+          <div class="org-card-image" style="background-image: url('https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=280&h=220&fit=crop&auto=format&q=80')"></div>
+          <div class="org-card-content">
+            <div class="org-card-header">
+              <h4>Sebastopol Area Senior Center</h4>
+              <span class="verified-badge">Verified</span>
+            </div>
+            <div class="org-detail">
+              <strong>Who they are</strong>
+              <p>The Sebastopol Area Senior Center provides essential services, programs, and companionship to seniors in the community.</p>
+            </div>
+            <div class="org-detail">
+              <strong>What you'll do</strong>
+              <p>Volunteers can serve lunch, bus tables, wash dishes, and prep food at the Harvest Cafe; provide friendly service at The Legacy Store; drive seniors to appointments or assist with the Trishaw program; and help with event support, admin tasks, and groundskeeping.</p>
+            </div>
+            <div class="org-detail">
+              <strong>Location</strong>
+              <p>167 N High St, Sebastopol, CA 95472, USA</p>
+              
+            </div>
+            <a href="https://www.sebastopolseniorcenter.org/volunteer-1-2" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+          </div>
+        </div>
+      
+        <div class="org-card">
+          <div class="org-card-image" style="background-image: url('https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=280&h=220&fit=crop&auto=format&q=80')"></div>
+          <div class="org-card-content">
+            <div class="org-card-header">
+              <h4>The Salvation Army Santa Rosa Corps</h4>
+              <span class="verified-badge">Verified</span>
+            </div>
+            <div class="org-detail">
+              <strong>Who they are</strong>
+              <p>The Salvation Army Santa Rosa Corps provides services such as family assistance, disaster relief, senior programs, and addiction recovery to meet human needs in the community.</p>
+            </div>
+            <div class="org-detail">
+              <strong>What you'll do</strong>
+              <p>Contact the organization for current volunteer opportunities.</p>
+            </div>
+            <div class="org-detail">
+              <strong>Location</strong>
+              <p>93 Stony Cir, Santa Rosa, CA 95401, USA</p>
+              
+            </div>
+            <a href="https://santarosa.salvationarmy.org" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+          </div>
+        </div>
+      
+        <div class="org-card">
+          <div class="org-card-image" style="background-image: url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=280&h=220&fit=crop&auto=format&q=80')"></div>
+          <div class="org-card-content">
+            <div class="org-card-header">
+              <h4>Habitat for Humanity of Sonoma County</h4>
+              <span class="verified-badge">Verified</span>
+            </div>
+            <div class="org-detail">
+              <strong>Who they are</strong>
+              <p>Habitat for Humanity of Sonoma County builds affordable homes, fosters community, and provides opportunities for families to achieve stability and independence through homeownership.</p>
+            </div>
+            <div class="org-detail">
+              <strong>What you'll do</strong>
+              <p>Volunteers assist in building homes, supporting families, and contributing to various projects that help provide affordable housing in Sonoma County.</p>
+            </div>
+            <div class="org-detail">
+              <strong>Location</strong>
+              <p>3535 Industrial Dr a5, Santa Rosa, CA 95403, USA</p>
+              
+            </div>
+            <a href="https://www.habitatsoco.org/#" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+          </div>
+        </div>
+      
+        <div class="org-card">
+          <div class="org-card-image" style="background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=280&h=220&fit=crop&auto=format&q=80')"></div>
+          <div class="org-card-content">
+            <div class="org-card-header">
+              <h4>Petaluma People Services Center</h4>
+              <span class="verified-badge">Verified</span>
+            </div>
+            <div class="org-detail">
+              <strong>Who they are</strong>
+              <p>The organization provides senior services, mental health support, housing insecurity assistance, crisis intervention, and youth services to support individuals and families in the community.</p>
+            </div>
+            <div class="org-detail">
+              <strong>What you'll do</strong>
+              <p>Volunteers can deliver meals to homebound seniors, drive for the iRide program, mentor youth, create comfort and menstrual kits for the SAFE Team, hold sock drives, and collect snacks for community members.</p>
+            </div>
+            <div class="org-detail">
+              <strong>Location</strong>
+              <p>1500 Petaluma Blvd S, Petaluma, CA 94952, USA</p>
+              
+            </div>
+            <a href="https://www.petalumapeople.org/volunteer" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+          </div>
+        </div>
+      
+    </div>
+  
+    <div class="category-section">
+      <div class="category-header" style="border-left: 4px solid #9333ea">
+        <h3>Education</h3>
+        <span class="org-count">1 organization</span>
+      </div>
+      
+        <div class="org-card">
+          <div class="org-card-image" style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=280&h=220&fit=crop&auto=format&q=80')"></div>
+          <div class="org-card-content">
+            <div class="org-card-header">
+              <h4>Sonoma County Library</h4>
+              <span class="verified-badge">Verified</span>
+            </div>
+            <div class="org-detail">
+              <strong>Who they are</strong>
+              <p>Sonoma County Library provides access to books, digital resources, and community programs across its 12 regional libraries.</p>
+            </div>
+            <div class="org-detail">
+              <strong>What you'll do</strong>
+              <p>Volunteers can tutor adults in literacy and English language skills, assist Library Friends groups with book sales and fundraising, or join the Teen Advisory Group to help shape teen services and programs.</p>
+            </div>
+            <div class="org-detail">
+              <strong>Location</strong>
+              <p>7140 Bodega Ave, Sebastopol, CA 95472, USA</p>
+              
+            </div>
+            <a href="https://www.sonomalibrary.org/join/volunteer" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+          </div>
+        </div>
+      
+    </div>
+  
+    <div class="category-section">
+      <div class="category-header" style="border-left: 4px solid #ea580c">
+        <h3>Food &amp; Hunger</h3>
+        <span class="org-count">2 organizations</span>
+      </div>
+      
+        <div class="org-card">
+          <div class="org-card-image" style="background-image: url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=280&h=220&fit=crop&auto=format&q=80')"></div>
+          <div class="org-card-content">
+            <div class="org-card-header">
+              <h4>Redwood Empire Food Bank</h4>
+              <span class="verified-badge">Verified</span>
+            </div>
+            <div class="org-detail">
+              <strong>Who they are</strong>
+              <p>The organization works to end hunger in the community by distributing food and providing assistance programs.</p>
+            </div>
+            <div class="org-detail">
+              <strong>What you'll do</strong>
+              <p>Volunteers can help glean and package fresh produce, assemble grocery boxes, sort donated pantry items, assist in the kitchen with snack preparation (requires a California Food Handlers Card), stock shelves in the Food Connections Market, and distribute groceries at community sites.</p>
+            </div>
+            <div class="org-detail">
+              <strong>Location</strong>
+              <p>3990 Brickway Blvd, Santa Rosa, CA 95403, USA</p>
+              
+            </div>
+            <a href="https://refb.org/ways-to-give/volunteer.html" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+          </div>
+        </div>
+      
+        <div class="org-card">
+          <div class="org-card-image" style="background-image: url('https://images.unsplash.com/photo-1593113598332-cd288d649433?w=280&h=220&fit=crop&auto=format&q=80')"></div>
+          <div class="org-card-content">
+            <div class="org-card-header">
+              <h4>Ceres Community Project</h4>
+              <span class="verified-badge">Verified</span>
+            </div>
+            <div class="org-detail">
+              <strong>Who they are</strong>
+              <p>Ceres Community Project is a nonprofit organization that nourishes people, community, and the planet, based in Marin and Sonoma counties.</p>
+            </div>
+            <div class="org-detail">
+              <strong>What you'll do</strong>
+              <p>Attend a free online orientation to learn about volunteer opportunities in Santa Rosa, Petaluma, Sebastopol, and Novato.</p>
+            </div>
+            <div class="org-detail">
+              <strong>Location</strong>
+              <p>1237 Apollo Way, Santa Rosa, CA 95407, USA</p>
+              
+            </div>
+            <a href="https://www.ceresproject.org/volunteer/orientation-calendar" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+          </div>
+        </div>
+      
+    </div>
+  
+    <div class="category-section">
+      <div class="category-header" style="border-left: 4px solid #0891b2">
+        <h3>Youth &amp; Families</h3>
+        <span class="org-count">1 organization</span>
+      </div>
+      
+        <div class="org-card">
+          <div class="org-card-image" style="background-image: url('https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=280&h=220&fit=crop&auto=format&q=80')"></div>
+          <div class="org-card-content">
+            <div class="org-card-header">
+              <h4>Boys &amp; Girls Clubs of Sonoma-Marin</h4>
+              <span class="verified-badge">Verified</span>
+            </div>
+            <div class="org-detail">
+              <strong>Who they are</strong>
+              <p>The organization provides programs and services to support youth development, including athletics, education, and mentorship opportunities.</p>
+            </div>
+            <div class="org-detail">
+              <strong>What you'll do</strong>
+              <p>Volunteers can facilitate reading groups, help with homework, run sports or art programs, mentor youth, support athletic programs as coaches or referees, assist with administration tasks, or help with fundraising and social media.</p>
+            </div>
+            <div class="org-detail">
+              <strong>Location</strong>
+              <p>1400 N Dutton Ave Suite 24, Santa Rosa, CA 95401, USA</p>
+              
+            </div>
+            <a href="https://www.bgcsonoma-marin.org/volunteer" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+          </div>
+        </div>
+      
+    </div>
+  
+    <div class="category-section">
+      <div class="category-header" style="border-left: 4px solid #dc2626">
+        <h3>Animals</h3>
+        <span class="org-count">1 organization</span>
+      </div>
+      
+        <div class="org-card">
+          <div class="org-card-image" style="background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=280&h=220&fit=crop&auto=format&q=80')"></div>
+          <div class="org-card-content">
+            <div class="org-card-header">
+              <h4>Humane Society of Sonoma County</h4>
+              <span class="verified-badge">Verified</span>
+            </div>
+            <div class="org-detail">
+              <strong>Who they are</strong>
+              <p>The organization ensures every animal receives protection, compassion, love, and care through adoption, veterinary services, and community programs.</p>
+            </div>
+            <div class="org-detail">
+              <strong>What you'll do</strong>
+              <p>Volunteers may assist with dog walking, attend orientations, and commit to scheduled shifts. Corporate group opportunities are project-based.</p>
+            </div>
+            <div class="org-detail">
+              <strong>Location</strong>
+              <p>873 2nd St, Santa Rosa, CA 95404, USA</p>
+              
+            </div>
+            <a href="https://humanesocietysoco.org/get-involved/volunteer/" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+          </div>
+        </div>
+      
+    </div>
+  
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <h2>Volunteer Opportunity Map</h2>
+      <p class="subtitle">Click an organization in the sidebar to fly to its location</p>
+      <div class="map-container">
+        <div class="map-legend">
+          <div class="map-legend-title">Organizations</div>
+          <div class="legend-home" onclick="flyToHome()">
+            <div class="legend-home-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+            <div class="legend-text">
+              <span class="legend-name">The Lodge at Sereno Del Mar</span>
+              <span class="legend-addr">Your Stay</span>
+            </div>
+          </div>
+          <div class="legend-item" id="legend-0" onclick="flyToMarker(0, this)"><div class="legend-dot" style="background:#16a34a"></div><div class="legend-text"><span class="legend-name">LandPaths</span><span class="legend-addr">17599 Fitzpatrick Ln, Occidental, CA 95465, USA</span></div></div><div class="legend-item" id="legend-1" onclick="flyToMarker(1, this)"><div class="legend-dot" style="background:#16a34a"></div><div class="legend-text"><span class="legend-name">Stewards of the Coast and Redwoods</span><span class="legend-addr">17000 Armstrong Woods Rd, Guerneville, CA 95446, USA</span></div></div><div class="legend-item" id="legend-2" onclick="flyToMarker(2, this)"><div class="legend-dot" style="background:#2563eb"></div><div class="legend-text"><span class="legend-name">Sebastopol Area Senior Center</span><span class="legend-addr">167 N High St, Sebastopol, CA 95472, USA</span></div></div><div class="legend-item" id="legend-3" onclick="flyToMarker(3, this)"><div class="legend-dot" style="background:#9333ea"></div><div class="legend-text"><span class="legend-name">Sonoma County Library</span><span class="legend-addr">7140 Bodega Ave, Sebastopol, CA 95472, USA</span></div></div><div class="legend-item" id="legend-4" onclick="flyToMarker(4, this)"><div class="legend-dot" style="background:#ea580c"></div><div class="legend-text"><span class="legend-name">Redwood Empire Food Bank</span><span class="legend-addr">3990 Brickway Blvd, Santa Rosa, CA 95403, USA</span></div></div><div class="legend-item" id="legend-5" onclick="flyToMarker(5, this)"><div class="legend-dot" style="background:#ea580c"></div><div class="legend-text"><span class="legend-name">Ceres Community Project</span><span class="legend-addr">1237 Apollo Way, Santa Rosa, CA 95407, USA</span></div></div><div class="legend-item" id="legend-6" onclick="flyToMarker(6, this)"><div class="legend-dot" style="background:#16a34a"></div><div class="legend-text"><span class="legend-name">Sonoma County Regional Parks</span><span class="legend-addr">400 Aviation Blvd #100, Santa Rosa, CA 95403, USA</span></div></div><div class="legend-item" id="legend-7" onclick="flyToMarker(7, this)"><div class="legend-dot" style="background:#2563eb"></div><div class="legend-text"><span class="legend-name">The Salvation Army Santa Rosa Corps</span><span class="legend-addr">93 Stony Cir, Santa Rosa, CA 95401, USA</span></div></div><div class="legend-item" id="legend-8" onclick="flyToMarker(8, this)"><div class="legend-dot" style="background:#0891b2"></div><div class="legend-text"><span class="legend-name">Boys &amp; Girls Clubs of Sonoma-Marin</span><span class="legend-addr">1400 N Dutton Ave Suite 24, Santa Rosa, CA 95401, USA</span></div></div><div class="legend-item" id="legend-9" onclick="flyToMarker(9, this)"><div class="legend-dot" style="background:#2563eb"></div><div class="legend-text"><span class="legend-name">Habitat for Humanity of Sonoma County</span><span class="legend-addr">3535 Industrial Dr a5, Santa Rosa, CA 95403, USA</span></div></div><div class="legend-item" id="legend-10" onclick="flyToMarker(10, this)"><div class="legend-dot" style="background:#dc2626"></div><div class="legend-text"><span class="legend-name">Humane Society of Sonoma County</span><span class="legend-addr">873 2nd St, Santa Rosa, CA 95404, USA</span></div></div><div class="legend-item" id="legend-11" onclick="flyToMarker(11, this)"><div class="legend-dot" style="background:#2563eb"></div><div class="legend-text"><span class="legend-name">Petaluma People Services Center</span><span class="legend-addr">1500 Petaluma Blvd S, Petaluma, CA 94952, USA</span></div></div><div class="legend-item" id="legend-12" onclick="flyToMarker(12, this)"><div class="legend-dot" style="background:#16a34a"></div><div class="legend-text"><span class="legend-name">Point Reyes National Seashore Association</span><span class="legend-addr">1 Bear Valley Rd bldg 70, Point Reyes Station, CA 94956, USA</span></div></div>
+        </div>
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="thank-you">
+    <div class="container">
+      <h2>Thank You</h2>
+      <p>Thank you for considering volunteering during your stay at The Lodge at Sereno Del Mar. Your time and effort can make a meaningful difference for local organizations and the community.</p>
+    </div>
+  </div>
+
+  <footer>&copy; 2026 WanderWell &mdash; Travel with purpose</footer>
+
+  <script>
+    var markers = {};
+    var map;
+    function flyToMarker(id, el) {
+      document.querySelectorAll('.legend-item').forEach(function(e) { e.classList.remove('active'); });
+      if (el) el.classList.add('active');
+      var m = markers[id];
+      if (m) { map.flyTo(m.getLatLng(), 15, { duration: 0.6 }); m.openPopup(); }
+    }
+    function flyToHome() {
+      document.querySelectorAll('.legend-item').forEach(function(e) { e.classList.remove('active'); });
+      map.flyTo([38.3828787, -123.0792537], 13, { duration: 0.6 });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      var stayLat = 38.3828787;
+      var stayLng = -123.0792537;
+      map = L.map('map').setView([stayLat, stayLng], 12);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 18
+      }).addTo(map);
+
+      var homeIcon = L.divIcon({
+        html: '<div style="background:#1a1a2e;color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+        className: ''
+      });
+      L.marker([stayLat, stayLng], { icon: homeIcon })
+        .addTo(map)
+        .bindPopup('<strong>The Lodge at Sereno Del Mar</strong><br>Your Stay');
+
+      var bounds = [[stayLat, stayLng]];
+      var m0=L.marker([38.3980141,-122.9915491]).addTo(map);m0.bindPopup('<strong>LandPaths</strong><br>17599 Fitzpatrick Ln, Occidental, CA 95465, USA<br><a href="https://www.landpaths.org/participate/" target="_blank">Visit Website</a>');markers[0]=m0;bounds.push([38.3980141,-122.9915491]);
+        var m1=L.marker([38.5324958,-123.0025736]).addTo(map);m1.bindPopup('<strong>Stewards of the Coast and Redwoods</strong><br>17000 Armstrong Woods Rd, Guerneville, CA 95446, USA<br><a href="https://www.stewardscr.org/#" target="_blank">Visit Website</a>');markers[1]=m1;bounds.push([38.5324958,-123.0025736]);
+        var m2=L.marker([38.4026295,-122.8257876]).addTo(map);m2.bindPopup('<strong>Sebastopol Area Senior Center</strong><br>167 N High St, Sebastopol, CA 95472, USA<br><a href="https://www.sebastopolseniorcenter.org/volunteer-1-2" target="_blank">Visit Website</a>');markers[2]=m2;bounds.push([38.4026295,-122.8257876]);
+        var m3=L.marker([38.4018671,-122.8254854]).addTo(map);m3.bindPopup('<strong>Sonoma County Library</strong><br>7140 Bodega Ave, Sebastopol, CA 95472, USA<br><a href="https://www.sonomalibrary.org/join/volunteer" target="_blank">Visit Website</a>');markers[3]=m3;bounds.push([38.4018671,-122.8254854]);
+        var m4=L.marker([38.5139838,-122.7925672]).addTo(map);m4.bindPopup('<strong>Redwood Empire Food Bank</strong><br>3990 Brickway Blvd, Santa Rosa, CA 95403, USA<br><a href="https://refb.org/ways-to-give/volunteer.html" target="_blank">Visit Website</a>');markers[4]=m4;bounds.push([38.5139838,-122.7925672]);
+        var m5=L.marker([38.4208955,-122.7497355]).addTo(map);m5.bindPopup('<strong>Ceres Community Project</strong><br>1237 Apollo Way, Santa Rosa, CA 95407, USA<br><a href="https://www.ceresproject.org/volunteer/orientation-calendar" target="_blank">Visit Website</a>');markers[5]=m5;bounds.push([38.4208955,-122.7497355]);
+        var m6=L.marker([38.5116169,-122.782893]).addTo(map);m6.bindPopup('<strong>Sonoma County Regional Parks</strong><br>400 Aviation Blvd #100, Santa Rosa, CA 95403, USA<br><a href="https://parks.sonomacounty.ca.gov/learn/volunteer" target="_blank">Visit Website</a>');markers[6]=m6;bounds.push([38.5116169,-122.782893]);
+        var m7=L.marker([38.43982949999999,-122.7474985]).addTo(map);m7.bindPopup('<strong>The Salvation Army Santa Rosa Corps</strong><br>93 Stony Cir, Santa Rosa, CA 95401, USA<br><a href="https://santarosa.salvationarmy.org" target="_blank">Visit Website</a>');markers[7]=m7;bounds.push([38.43982949999999,-122.7474985]);
+        var m8=L.marker([38.4511375,-122.7343387]).addTo(map);m8.bindPopup('<strong>Boys & Girls Clubs of Sonoma-Marin</strong><br>1400 N Dutton Ave Suite 24, Santa Rosa, CA 95401, USA<br><a href="https://www.bgcsonoma-marin.org/volunteer" target="_blank">Visit Website</a>');markers[8]=m8;bounds.push([38.4511375,-122.7343387]);
+        var m9=L.marker([38.4785191,-122.7362239]).addTo(map);m9.bindPopup('<strong>Habitat for Humanity of Sonoma County</strong><br>3535 Industrial Dr a5, Santa Rosa, CA 95403, USA<br><a href="https://www.habitatsoco.org/#" target="_blank">Visit Website</a>');markers[9]=m9;bounds.push([38.4785191,-122.7362239]);
+        var m10=L.marker([38.4416862,-122.7075882]).addTo(map);m10.bindPopup('<strong>Humane Society of Sonoma County</strong><br>873 2nd St, Santa Rosa, CA 95404, USA<br><a href="https://humanesocietysoco.org/get-involved/volunteer/" target="_blank">Visit Website</a>');markers[10]=m10;bounds.push([38.4416862,-122.7075882]);
+        var m11=L.marker([38.2264872,-122.6198849]).addTo(map);m11.bindPopup('<strong>Petaluma People Services Center</strong><br>1500 Petaluma Blvd S, Petaluma, CA 94952, USA<br><a href="https://www.petalumapeople.org/volunteer" target="_blank">Visit Website</a>');markers[11]=m11;bounds.push([38.2264872,-122.6198849]);
+        var m12=L.marker([38.0439695,-122.7984135]).addTo(map);m12.bindPopup('<strong>Point Reyes National Seashore Association</strong><br>1 Bear Valley Rd bldg 70, Point Reyes Station, CA 94956, USA<br><a href="https://ptreyes.org/about/jobs/#volunteer" target="_blank">Visit Website</a>');markers[12]=m12;bounds.push([38.0439695,-122.7984135]);
+      if (bounds.length > 1) { map.fitBounds(bounds, { padding: [40, 40] }); }
+    });
+  </script>
+</body>
+</html>
