@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volunteer Guide - The Lodge at Sereno Del Mar | WanderWell</title>
+  <meta name="description" content="Volunteer opportunities guide for guests at The Lodge at Sereno Del Mar">
+  <meta property="og:title" content="Volunteer Guide - The Lodge at Sereno Del Mar">
+  <meta property="og:description" content="Our home is 4 houses down from Portuguese Beach. It sits on half an acre and backs up to a 600 acre ranch. The back patio looks out over the ranch with the ocea">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #f8f9fa; line-height: 1.6; }
+    
+    .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 80px 20px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .hero p { font-size: 1.125rem; opacity: 0.9; max-width: 600px; margin: 0 auto; line-height: 1.8; }
+    .hero .wanderwell-badge { display: inline-block; background: rgba(255,255,255,0.15); padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; margin-bottom: 24px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+    .section { padding: 60px 20px; }
+    .section-alt { background: white; }
+    .section h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 600; margin-bottom: 16px; color: #1a1a2e; text-align: center; }
+    .section .subtitle { text-align: center; color: #64748b; font-size: 1.05rem; margin-bottom: 40px; }
+
+    .purpose-section { background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-top: 3px solid #16a34a; }
+    .purpose-section h2 { color: #15803d; }
+
+    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-top: 32px; }
+    .value-card { text-align: center; padding: 24px; background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .value-icon { font-size: 2rem; margin-bottom: 12px; }
+    .value-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; color: #1a1a2e; }
+    .value-card p { font-size: 0.9rem; color: #64748b; }
+
+    .mission-box { background: white; border-radius: 12px; padding: 32px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.08); max-width: 700px; margin: 0 auto; }
+    .mission-box p { color: #475569; font-size: 1.05rem; line-height: 1.8; font-style: italic; }
+
+    .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; }
+    .step-card { text-align: center; padding: 24px 16px; }
+    .step-number { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: #1a1a2e; color: white; border-radius: 50%; font-weight: 600; font-size: 1.1rem; margin-bottom: 12px; }
+    .step-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
+    .step-card p { font-size: 0.875rem; color: #64748b; }
+
+    .pro-tip { background: #fffbeb; border: 1px solid #fbbf24; border-radius: 12px; padding: 20px; margin-top: 32px; text-align: center; }
+    .pro-tip strong { color: #92400e; }
+    .pro-tip p { color: #78350f; font-size: 0.95rem; }
+
+    .category-section { margin-bottom: 40px; }
+    .category-header { padding: 12px 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
+    .category-header h3 { font-size: 1.25rem; font-weight: 600; color: #1a1a2e; }
+    .org-count { font-size: 0.85rem; color: #64748b; background: #f1f5f9; padding: 4px 12px; border-radius: 12px; }
+
+    .org-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 16px; transition: box-shadow 0.2s; }
+    .org-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .org-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+    .org-card-header h4 { font-size: 1.15rem; font-weight: 600; color: #1a1a2e; }
+    .verified-badge { display: inline-flex; align-items: center; gap: 4px; background: #f0fdf4; color: #16a34a; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 500; }
+    .verified-badge::before { content: '\2713'; font-weight: 700; }
+    .org-detail { margin-bottom: 12px; }
+    .org-detail strong { display: block; font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .org-detail p { color: #334155; font-size: 0.95rem; }
+    .distance { color: #16a34a !important; font-size: 0.85rem !important; font-weight: 500; }
+    .visit-link { display: inline-block; background: #1a1a2e; color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: background 0.2s; }
+    .visit-link:hover { background: #16213e; }
+
+    .map-container { display: flex; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 24px; height: 550px; }
+    .map-legend { width: 280px; background: white; overflow-y: auto; border-right: 1px solid #e2e8f0; flex-shrink: 0; }
+    .map-legend-title { padding: 16px; font-weight: 600; font-size: 0.95rem; border-bottom: 1px solid #e2e8f0; background: #f8fafc; }
+    .legend-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px 16px; cursor: pointer; border-bottom: 1px solid #f1f5f9; transition: background 0.15s; }
+    .legend-item:hover, .legend-item.active { background: #f0fdf4; }
+    .legend-item.active { border-left: 3px solid #16a34a; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+    .legend-text { min-width: 0; }
+    .legend-name { display: block; font-size: 0.85rem; font-weight: 600; color: #1a1a2e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .legend-addr { display: block; font-size: 0.75rem; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .legend-home { display: flex; align-items: center; gap: 10px; padding: 12px 16px; cursor: pointer; border-bottom: 2px solid #e2e8f0; background: #fefce8; }
+    .legend-home:hover { background: #fef9c3; }
+    .legend-home-icon { width: 24px; height: 24px; background: #1a1a2e; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .legend-home-icon svg { width: 12px; height: 12px; }
+    #map { flex: 1; min-height: 0; }
+
+    .thank-you { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; text-align: center; padding: 60px 20px; }
+    .thank-you h2 { color: white; }
+    .thank-you p { color: rgba(255,255,255,0.85); max-width: 600px; margin: 0 auto; font-size: 1.05rem; }
+
+    footer { background: #0f172a; color: rgba(255,255,255,0.6); text-align: center; padding: 24px; font-size: 0.85rem; }
+
+    @media print {
+      .hero { padding: 40px 20px; }
+      .hero h1 { font-size: 2rem; }
+      .map-container { height: 400px; }
+      .map-legend { width: 200px; }
+      .org-card { break-inside: avoid; }
+      .section { padding: 30px 20px; }
+    }
+    @media (max-width: 768px) {
+      .map-container { flex-direction: column; height: auto; }
+      .map-legend { width: 100%; max-height: 200px; border-right: none; border-bottom: 1px solid #e2e8f0; }
+      #map { height: 400px; }
+    }
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 2rem; }
+      .hero { padding: 48px 16px; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-content">
+      <span class="wanderwell-badge">WanderWell Guide</span>
+      <h1>Welcome to The Lodge at Sereno Del Mar</h1>
+      <p>Our home is 4 houses down from Portuguese Beach. It sits on half an acre and backs up to a 600 acre ranch. The back patio looks out over the ranch with the ocean behind it. I love that the cows often come and visit us in the mornings while we are drinking our coffee on the deck. It is a very quiet and serene place. You can hear the sound of the ocean waves from the house. There is a staircase that goes down to the beach right across the road from the neighborhood. There are many other beaches and hiking trails close by. The house is not far from other tourist locations such as San Francisco, Russian River, and Napa. During March and April you can sometimes see the whale migrating in the distance. It’s a fantastic house to stay and relax or venture out. The home has 2 bedrooms with cal king beds, 1 queen pullout sofa bed and 1 queen Murphy bed in the game room(which we have listed as a 3rd bedroom). There is a queen blowup mattress as well and a portable crib. There are 2 bathrooms.</p>
+    </div>
+  </div>
+
+  <div class="section purpose-section">
+    <div class="container">
+      <h2>Purpose-Driven Travel Begins Here</h2>
+      <p class="subtitle">As a guest at The Lodge at Sereno Del Mar, we invite you to give back to the local community by volunteering with one of the many organizations in the area. This guide will help you discover opportunities to make a positive impact during your stay.</p>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Connect</h3>
+          <p>Meet like-minded individuals and build relationships with the local community.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg></div>
+          <h3>Ground</h3>
+          <p>Get involved in environmental conservation efforts and help protect the natural beauty of the area.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+          <h3>Impact</h3>
+          <p>Make a meaningful difference in the lives of others by volunteering with organizations that support the local community.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg></div>
+          <h3>Inspire</h3>
+          <p>Be inspired by the dedication and passion of local organizations working to create positive change.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section-alt">
+    <div class="container">
+      <div class="mission-box">
+        <p>At WanderWell, we believe that travel and giving back go hand-in-hand. Our mission is to provide opportunities for guests to engage with local communities and make a positive impact on the places they visit.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <h2>How to Use This Volunteer Guide</h2>
+      <p class="subtitle">Follow these simple steps to find and participate in meaningful volunteer opportunities during your stay.</p>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Browse Categories</h3>
+          <p>Explore volunteer opportunities ranging from environmental conservation to community support.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Check Schedules</h3>
+          <p>Look for volunteer opportunities that fit your travel schedule.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Sign Up</h3>
+          <p>Register with the organizations that resonate with you.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h3>Make Impact</h3>
+          <p>Participate and make a meaningful difference.</p>
+        </div>
+      </div>
+      <div class="pro-tip">
+        <p><strong>Pro Tip:</strong> Use the interactive map below to find volunteer opportunities near your location and plan your itinerary accordingly.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section-alt">
+    <div class="container">
+      <h2>Local Service Opportunities</h2>
+      <p class="subtitle">Curated for guests staying at The Lodge at Sereno Del Mar</p>
+      
+    <div class="category-section">
+      <div class="category-header" style="border-left: 4px solid #ea580c">
+        <h3>Food &amp; Hunger</h3>
+        <span class="org-count">1 organization</span>
+      </div>
+      
+        <div class="org-card">
+          <div class="org-card-header">
+            <h4>Food For Thought Food Bank</h4>
+            <span class="verified-badge">Verified</span>
+          </div>
+          <div class="org-detail">
+            <strong>Who they are</strong>
+            <p>Food For Thought Food Bank provides healthy, medically tailored food to individuals in Sonoma County living with serious medical conditions.</p>
+          </div>
+          <div class="org-detail">
+            <strong>What you'll do</strong>
+            <p>Volunteers can assist with food bank operations, food drives, food delivery, gardening, administrative support, and event support. Activities include tasks such as filling food orders, collecting donations, delivering food to clients, gardening, data entry, and assisting with event logistics.</p>
+          </div>
+          <div class="org-detail">
+            <strong>Location</strong>
+            <p>6550, Railroad Avenue, Forestville, California, 95436</p>
+            <p class="distance">11.9 miles from your stay</p>
+          </div>
+          <div class="org-detail"><strong>Phone</strong><p>(707) 887-1647</p></div>
+          <a href="https://fftfoodbank.org/volunteer/" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+        </div>
+      
+    </div>
+  
+    <div class="category-section">
+      <div class="category-header" style="border-left: 4px solid #2563eb">
+        <h3>Community</h3>
+        <span class="org-count">1 organization</span>
+      </div>
+      
+        <div class="org-card">
+          <div class="org-card-header">
+            <h4>Ceres Community Project</h4>
+            <span class="verified-badge">Verified</span>
+          </div>
+          <div class="org-detail">
+            <strong>Who they are</strong>
+            <p>The organization focuses on engaging volunteers to support its mission, as volunteers are described as the heart of Ceres.</p>
+          </div>
+          <div class="org-detail">
+            <strong>What you'll do</strong>
+            <p>The website mentions opportunities for youth, adults, and businesses to volunteer.</p>
+          </div>
+          <div class="org-detail">
+            <strong>Location</strong>
+            <p>7351, Bodega Avenue, Sebastopol, California, 95472</p>
+            <p class="distance">13.7 miles from your stay</p>
+          </div>
+          
+          <a href="https://www.ceresproject.org/volunteer" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+        </div>
+      
+    </div>
+  
+    <div class="category-section">
+      <div class="category-header" style="border-left: 4px solid #16a34a">
+        <h3>Environment</h3>
+        <span class="org-count">2 organizations</span>
+      </div>
+      
+        <div class="org-card">
+          <div class="org-card-header">
+            <h4>Sonoma Land Trust</h4>
+            <span class="verified-badge">Verified</span>
+          </div>
+          <div class="org-detail">
+            <strong>Who they are</strong>
+            <p>Sonoma Land Trust works to protect the natural beauty of Sonoma County through conservation efforts and community engagement.</p>
+          </div>
+          <div class="org-detail">
+            <strong>What you'll do</strong>
+            <p>Volunteer opportunities include outreach and education, event support, land stewardship activities like removing fences and planting native plants, community science and monitoring, skilled office assistance, and advocacy efforts such as phone banking and installing campaign signs.</p>
+          </div>
+          <div class="org-detail">
+            <strong>Location</strong>
+            <p>4th Street, Santa Rosa, California, 95402</p>
+            <p class="distance">20.4 miles from your stay</p>
+          </div>
+          
+          <a href="mailto:Volunteer@sonomalandtrust.org" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+        </div>
+      
+        <div class="org-card">
+          <div class="org-card-header">
+            <h4>Volunteer</h4>
+            <span class="verified-badge">Verified</span>
+          </div>
+          <div class="org-detail">
+            <strong>Who they are</strong>
+            <p>Sonoma County Regional Parks focuses on enhancing the quality of life in Sonoma County by providing recreational, social, and cultural opportunities, as well as preserving, conserving, and restoring natural, scenic, and historical resources.</p>
+          </div>
+          <div class="org-detail">
+            <strong>What you'll do</strong>
+            <p>Volunteers at Sonoma County Regional Parks assist with building trails, maintaining campgrounds, staffing special events, mending fences, leading hikes, clearing brush, and other activities. They can also participate in work days to steward natural resources, maintain trails, and improve facilities, or serve as campground hosts to assist with visitor services and minor park maintenance.</p>
+          </div>
+          <div class="org-detail">
+            <strong>Location</strong>
+            <p>Volunteer Canyon, Marin County, California, United States</p>
+            <p class="distance">38.5 miles from your stay</p>
+          </div>
+          <div class="org-detail"><strong>Phone</strong><p>707-565-3356</p></div>
+          <a href="https://parks.sonomacounty.ca.gov/learn/volunteer" target="_blank" rel="noopener" class="visit-link">Visit Website &rarr;</a>
+        </div>
+      
+    </div>
+  
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <h2>Volunteer Opportunity Map</h2>
+      <p class="subtitle">Click an organization in the sidebar to fly to its location</p>
+      <div class="map-container">
+        <div class="map-legend">
+          <div class="map-legend-title">Organizations</div>
+          <div class="legend-home" onclick="flyToHome()">
+            <div class="legend-home-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+            <div class="legend-text">
+              <span class="legend-name">The Lodge at Sereno Del Mar</span>
+              <span class="legend-addr">Your Stay</span>
+            </div>
+          </div>
+          <div class="legend-item" id="legend-0" onclick="flyToMarker(0, this)"><div class="legend-dot" style="background:#ea580c"></div><div class="legend-text"><span class="legend-name">Food For Thought Food Bank</span><span class="legend-addr">6550, Railroad Avenue, Forestville, California, 95436</span></div></div><div class="legend-item" id="legend-1" onclick="flyToMarker(1, this)"><div class="legend-dot" style="background:#2563eb"></div><div class="legend-text"><span class="legend-name">Ceres Community Project</span><span class="legend-addr">7351, Bodega Avenue, Sebastopol, California, 95472</span></div></div><div class="legend-item" id="legend-2" onclick="flyToMarker(2, this)"><div class="legend-dot" style="background:#16a34a"></div><div class="legend-text"><span class="legend-name">Sonoma Land Trust</span><span class="legend-addr">4th Street, Santa Rosa, California, 95402</span></div></div><div class="legend-item" id="legend-3" onclick="flyToMarker(3, this)"><div class="legend-dot" style="background:#16a34a"></div><div class="legend-text"><span class="legend-name">Volunteer</span><span class="legend-addr">Volunteer Canyon, Marin County, California, United States</span></div></div>
+        </div>
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="thank-you">
+    <div class="container">
+      <h2>Thank You</h2>
+      <p>Thank you for considering volunteering during your stay at The Lodge at Sereno Del Mar. Your time and effort can make a meaningful difference for local organizations and the community.</p>
+    </div>
+  </div>
+
+  <footer>&copy; 2026 WanderWell &mdash; Travel with purpose</footer>
+
+  <script>
+    var markers = {};
+    var map;
+    function flyToMarker(id, el) {
+      document.querySelectorAll('.legend-item').forEach(function(e) { e.classList.remove('active'); });
+      if (el) el.classList.add('active');
+      var m = markers[id];
+      if (m) { map.flyTo(m.getLatLng(), 15, { duration: 0.6 }); m.openPopup(); }
+    }
+    function flyToHome() {
+      document.querySelectorAll('.legend-item').forEach(function(e) { e.classList.remove('active'); });
+      map.flyTo([38.3828613, -123.0792375], 13, { duration: 0.6 });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      var stayLat = 38.3828613;
+      var stayLng = -123.0792375;
+      map = L.map('map').setView([stayLat, stayLng], 12);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 18
+      }).addTo(map);
+
+      var homeIcon = L.divIcon({
+        html: '<div style="background:#1a1a2e;color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+        className: ''
+      });
+      L.marker([stayLat, stayLng], { icon: homeIcon })
+        .addTo(map)
+        .bindPopup('<strong>The Lodge at Sereno Del Mar</strong><br>Your Stay');
+
+      var bounds = [[stayLat, stayLng]];
+      var m0=L.marker([38.472594,-122.8908416]).addTo(map);m0.bindPopup('<strong>Food For Thought Food Bank</strong><br>6550, Railroad Avenue, Forestville, California, 95436<br><a href="https://fftfoodbank.org/volunteer/" target="_blank">Visit Website</a>');markers[0]=m0;bounds.push([38.472594,-122.8908416]);
+        var m1=L.marker([38.400842,-122.8270914]).addTo(map);m1.bindPopup('<strong>Ceres Community Project</strong><br>7351, Bodega Avenue, Sebastopol, California, 95472<br><a href="https://www.ceresproject.org/volunteer" target="_blank">Visit Website</a>');markers[1]=m1;bounds.push([38.400842,-122.8270914]);
+        var m2=L.marker([38.4424684,-122.7099913]).addTo(map);m2.bindPopup('<strong>Sonoma Land Trust</strong><br>4th Street, Santa Rosa, California, 95402<br><a href="mailto:Volunteer@sonomalandtrust.org" target="_blank">Visit Website</a>');markers[2]=m2;bounds.push([38.4424684,-122.7099913]);
+        var m3=L.marker([37.9257775,-122.6747979]).addTo(map);m3.bindPopup('<strong>Volunteer</strong><br>Volunteer Canyon, Marin County, California, United States<br><a href="https://parks.sonomacounty.ca.gov/learn/volunteer" target="_blank">Visit Website</a>');markers[3]=m3;bounds.push([37.9257775,-122.6747979]);
+      if (bounds.length > 1) { map.fitBounds(bounds, { padding: [40, 40] }); }
+    });
+  </script>
+</body>
+</html>
