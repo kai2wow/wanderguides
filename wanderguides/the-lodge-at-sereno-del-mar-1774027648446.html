@@ -123,7 +123,7 @@
     <div class="hero-content">
       <span class="wanderwell-badge">WanderWell Guide</span>
       <h1>Welcome to The Lodge at Sereno Del Mar</h1>
-      <p>Welcome to The Lodge at Sereno Del Mar, where your stay is surrounded by the breathtaking coastal beauty of Bodega Bay. Nestled near the serene waves of the Pacific and rolling hills, this charming retreat offers a peaceful atmosphere perfect for relaxation and exploration. Whether you’re admiring the dramatic ocean views, discovering nearby trails, or enjoying fresh seafood at local eateries, your visit promises tranquility and unforgettable moments in nature’s embrace.</p>
+      <p>Welcome to The Lodge at Sereno Del Mar, where your stay is surrounded by the breathtaking coastal beauty of Bodega Bay. Nestled near the serene waves of the Pacific and rolling hills, this charming retreat offers a peaceful atmosphere perfect for relaxation and exploration. Whether you're admiring the dramatic ocean views, discovering nearby trails, or enjoying fresh seafood at local eateries, your visit promises tranquility and unforgettable moments in nature's embrace.</p>
     </div>
   </div>
 
@@ -196,7 +196,29 @@
     </div>
   </div>
 
+  <!-- MAP MOVED HERE: above Local Service Opportunities -->
   <div class="section section-alt">
+    <div class="container">
+      <h2>Volunteer Opportunity Map</h2>
+      <p class="subtitle">Click an organization in the sidebar to fly to its location</p>
+      <div class="map-container">
+        <div class="map-legend">
+          <div class="map-legend-title">Organizations</div>
+          <div class="legend-home" onclick="flyToHome()">
+            <div class="legend-home-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+            <div class="legend-text">
+              <span class="legend-name">The Lodge at Sereno Del Mar</span>
+              <span class="legend-addr">Your Stay</span>
+            </div>
+          </div>
+          <div class="legend-item" id="legend-0" onclick="flyToMarker(0, this)"><div class="legend-dot" style="background:#ea580c"></div><div class="legend-text"><span class="legend-name">Food For Thought Food Bank</span><span class="legend-addr">6550 Railroad Avenue, Forestville, CA 95436</span></div></div><div class="legend-item" id="legend-1" onclick="flyToMarker(1, this)"><div class="legend-dot" style="background:#ea580c"></div><div class="legend-text"><span class="legend-name">Redwood Empire Food Bank</span><span class="legend-addr">3990 Brickway Blvd., Santa Rosa, CA 95403</span></div></div><div class="legend-item" id="legend-2" onclick="flyToMarker(2, this)"><div class="legend-dot" style="background:#16a34a"></div><div class="legend-text"><span class="legend-name">Sonoma County Regional Parks</span><span class="legend-addr">400 Aviation Blvd, Suite 100, Santa Rosa, CA 95403</span></div></div><div class="legend-item" id="legend-3" onclick="flyToMarker(3, this)"><div class="legend-dot" style="background:#16a34a"></div><div class="legend-text"><span class="legend-name">Russian Riverkeeper</span><span class="legend-addr">P.O. Box 1335, Healdsburg, CA 95448</span></div></div><div class="legend-item" id="legend-4" onclick="flyToMarker(4, this)"><div class="legend-dot" style="background:#2563eb"></div><div class="legend-text"><span class="legend-name">Habitat for Humanity of Sonoma County</span><span class="legend-addr">3535 Industrial Dr, Unit A5 (upstairs), Santa Rosa, CA 95403</span></div></div><div class="legend-item" id="legend-5" onclick="flyToMarker(5, this)"><div class="legend-dot" style="background:#ea580c"></div><div class="legend-text"><span class="legend-name">Petaluma Bounty</span><span class="legend-addr">Petaluma Bounty Community Farm</span></div></div>
+        </div>
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
     <div class="container">
       <h2>Local Service Opportunities</h2>
       <p class="subtitle">Curated for guests staying at The Lodge at Sereno Del Mar</p>
@@ -369,27 +391,6 @@
       
     </div>
   
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="container">
-      <h2>Volunteer Opportunity Map</h2>
-      <p class="subtitle">Click an organization in the sidebar to fly to its location</p>
-      <div class="map-container">
-        <div class="map-legend">
-          <div class="map-legend-title">Organizations</div>
-          <div class="legend-home" onclick="flyToHome()">
-            <div class="legend-home-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-            <div class="legend-text">
-              <span class="legend-name">The Lodge at Sereno Del Mar</span>
-              <span class="legend-addr">Your Stay</span>
-            </div>
-          </div>
-          <div class="legend-item" id="legend-0" onclick="flyToMarker(0, this)"><div class="legend-dot" style="background:#ea580c"></div><div class="legend-text"><span class="legend-name">Food For Thought Food Bank</span><span class="legend-addr">6550 Railroad Avenue, Forestville, CA 95436</span></div></div><div class="legend-item" id="legend-1" onclick="flyToMarker(1, this)"><div class="legend-dot" style="background:#ea580c"></div><div class="legend-text"><span class="legend-name">Redwood Empire Food Bank</span><span class="legend-addr">3990 Brickway Blvd., Santa Rosa, CA 95403</span></div></div><div class="legend-item" id="legend-2" onclick="flyToMarker(2, this)"><div class="legend-dot" style="background:#16a34a"></div><div class="legend-text"><span class="legend-name">Sonoma County Regional Parks</span><span class="legend-addr">400 Aviation Blvd, Suite 100, Santa Rosa, CA 95403</span></div></div><div class="legend-item" id="legend-3" onclick="flyToMarker(3, this)"><div class="legend-dot" style="background:#16a34a"></div><div class="legend-text"><span class="legend-name">Russian Riverkeeper</span><span class="legend-addr">P.O. Box 1335, Healdsburg, CA 95448</span></div></div><div class="legend-item" id="legend-4" onclick="flyToMarker(4, this)"><div class="legend-dot" style="background:#2563eb"></div><div class="legend-text"><span class="legend-name">Habitat for Humanity of Sonoma County</span><span class="legend-addr">3535 Industrial Dr, Unit A5 (upstairs), Santa Rosa, CA 95403</span></div></div><div class="legend-item" id="legend-5" onclick="flyToMarker(5, this)"><div class="legend-dot" style="background:#ea580c"></div><div class="legend-text"><span class="legend-name">Petaluma Bounty</span><span class="legend-addr">Petaluma Bounty Community Farm</span></div></div>
-        </div>
-        <div id="map"></div>
-      </div>
     </div>
   </div>
 
