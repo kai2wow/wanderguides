@@ -121,7 +121,7 @@
     overflow: hidden;
   }
   .card-inner { padding: 28px 32px; }
-  .card img { width: 100%; height: 220px; object-fit: cover; display: block; }
+  .card img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
 
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -163,13 +163,18 @@
     grid-template-columns: 2fr 1fr 1fr;
     gap: 12px;
     margin: 24px 0;
-    border-radius: var(--radius);
-    overflow: hidden;
   }
-  .photo-strip img { width: 100%; height: 200px; object-fit: cover; display: block; border-radius: 10px; }
+  .photo-strip img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+  }
   @media(max-width: 640px) {
     .photo-strip { grid-template-columns: 1fr 1fr; }
-    .photo-strip img:first-child { grid-column: 1/-1; height: 180px; }
+    .photo-strip img:first-child { grid-column: 1/-1; }
   }
 
   /* ───────── STEPS ───────── */
@@ -203,7 +208,14 @@
     margin: 20px 0;
   }
   .photo-pair figure { position: relative; }
-  .photo-pair img { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; display: block; }
+  .photo-pair img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+  }
   .photo-pair figcaption {
     position: absolute;
     bottom: 0; left: 0; right: 0;
