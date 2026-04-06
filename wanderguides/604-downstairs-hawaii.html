@@ -157,10 +157,10 @@
   .address-box p { font-size: 1.1rem; font-weight: 500; }
   .address-box small { opacity: 0.65; font-size: 13px; }
 
-  /* ───────── PHOTO STRIP ───────── */
+  /* ───────── PHOTO STRIP — works for ANY number of images ───────── */
   .photo-strip {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 12px;
     margin: 24px 0;
   }
@@ -170,11 +170,22 @@
     aspect-ratio: 4 / 3;
     object-fit: cover;
     display: block;
-    border-radius: 10px;
+    border-radius: 12px;
   }
-  @media(max-width: 640px) {
-    .photo-strip { grid-template-columns: 1fr 1fr; }
-    .photo-strip img:first-child { grid-column: 1/-1; }
+  /* 1 image: full width, cinematic ratio */
+  .photo-strip img:first-child:last-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 9;
+  }
+  /* 2 images: slightly wider ratio */
+  .photo-strip img:first-child:nth-last-child(2),
+  .photo-strip img:nth-child(2):last-child {
+    aspect-ratio: 3 / 2;
+  }
+  @media(max-width: 480px) {
+    .photo-strip { grid-template-columns: 1fr; }
+    .photo-strip img,
+    .photo-strip img:first-child:last-child { aspect-ratio: 4 / 3; }
   }
 
   /* ───────── STEPS ───────── */
